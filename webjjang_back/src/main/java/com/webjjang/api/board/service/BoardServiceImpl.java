@@ -17,7 +17,7 @@ import java.util.List;
 public class BoardServiceImpl implements BoardService {
 
     @Autowired
-    private BoardRepositoryCustom boardRepositoryCustom;
+    private  BoardRepositoryCustom boardRepositoryCustom;
 
     @Override
     public List<BoardVO> list(PageObject pageObject) {
@@ -48,6 +48,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional
     public BoardVO view(Long no, Integer inc) {
         if(inc == 1) boardRepositoryCustom.increaseHit(no);
         Tuple tuple = boardRepositoryCustom.getBoard(no);
@@ -56,8 +57,8 @@ public class BoardServiceImpl implements BoardService {
         vo.setTitle(tuple.get(1, String.class));
         vo.setContent(tuple.get(2, String.class));
         vo.setWriter(tuple.get(3, String.class));
-        vo.setHit(tuple.get(4, Long.class));
-        vo.setWriteDate(tuple.get(5, LocalDateTime.class));
+        vo.setWriteDate(tuple.get(4, LocalDateTime.class));
+        vo.setHit(tuple.get(5, Long.class));
         return vo;
     }
 
@@ -89,6 +90,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional
     public BoardVO write(BoardVO vo) {
         Board board = boardRepositoryCustom.writeBoard(
                 boardVOToBoard(vo) // BoardVO -> Board

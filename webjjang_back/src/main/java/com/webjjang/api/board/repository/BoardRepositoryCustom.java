@@ -3,7 +3,6 @@ package com.webjjang.api.board.repository;
 import com.querydsl.core.Tuple;
 import com.webjjang.api.board.entity.Board;
 
-
 import java.util.List;
 
 public interface BoardRepositoryCustom {
